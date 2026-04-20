@@ -148,7 +148,17 @@ const InvoiceForm = () => {
         aria-labelledby="form-title"
         className="relative w-full max-w-[720px] bg-white dark:bg-[#141625] h-full overflow-y-auto animate-in slide-in-from-left duration-500 rounded-r-[20px] p-14 max-sm:p-6 transition-colors shadow-2xl"
       >
-        <h1 id="form-title" className="text-3xl font-bold mb-12 dark:text-white">
+        {/* Go Back (Mobile only) */}
+        <button 
+          type="button" 
+          onClick={closeForm}
+          className="hidden max-sm:flex items-center gap-6 font-bold text-sm mb-6 dark:text-white transition-colors"
+        >
+          <svg width="7" height="10" xmlns="http://www.w3.org/2000/svg"><path d="M6.342.886L2.114 5.114l4.228 4.228" stroke="#9277FF" strokeWidth="2" fill="none" fillRule="evenodd"/></svg>
+          Go back
+        </button>
+
+        <h1 id="form-title" className="text-3xl font-bold mb-12 max-sm:mb-6 dark:text-white">
           {invoiceToEdit ? (
             <>Edit <span className="text-[#888EB0]">#</span>{invoiceToEdit.id}</>
           ) : 'New Invoice'}
@@ -158,7 +168,7 @@ const InvoiceForm = () => {
           {/* Bill From */}
           <section aria-labelledby="bill-from-heading">
             <h3 id="bill-from-heading" className="text-[#7C5DFA] font-bold mb-6">Bill From</h3>
-            <div className="grid grid-cols-3 gap-6 max-sm:grid-cols-2">
+            <div className="grid grid-cols-3 gap-6 max-sm:grid-cols-2 max-sm:gap-x-6 max-sm:gap-y-6">
               <div className="col-span-3">
                 <label 
                   htmlFor={`${baseId}-sender-street`}
@@ -170,31 +180,31 @@ const InvoiceForm = () => {
                 <input 
                   id={`${baseId}-sender-street`}
                   {...register('senderAddress.street', { required: true })}
-                  className={`w-full p-4 border rounded-md dark:bg-[#1E2139] dark:border-[#252945] font-bold outline-none border-[#DFE3FA] focus:border-[#7C5DFA] transition-all dark:text-white ${errors.senderAddress?.street ? 'border-red-500 dark:border-red-500' : ''}`}
+                  className={`w-full h-[56px] px-4 border rounded-md dark:bg-[#1E2139] dark:border-[#252945] font-bold outline-none border-[#DFE3FA] focus:border-[#7C5DFA] transition-all dark:text-white ${errors.senderAddress?.street ? 'border-red-500 dark:border-red-500' : ''}`}
                 />
               </div>
-              <div>
+              <div className="max-sm:col-span-1">
                 <label htmlFor={`${baseId}-sender-city`} className="block text-sm mb-2 text-[#7E88C3] dark:text-[#DFE3FA]">City</label>
                 <input 
                   id={`${baseId}-sender-city`}
                   {...register('senderAddress.city', { required: true })}
-                  className={`w-full p-4 border rounded-md dark:bg-[#1E2139] dark:border-[#252945] font-bold outline-none border-[#DFE3FA] focus:border-[#7C5DFA] transition-all dark:text-white ${errors.senderAddress?.city ? 'border-red-500 dark:border-red-500' : ''}`}
+                  className={`w-full h-[56px] px-4 border rounded-md dark:bg-[#1E2139] dark:border-[#252945] font-bold outline-none border-[#DFE3FA] focus:border-[#7C5DFA] transition-all dark:text-white ${errors.senderAddress?.city ? 'border-red-500 dark:border-red-500' : ''}`}
                 />
               </div>
-              <div>
+              <div className="max-sm:col-span-1">
                 <label htmlFor={`${baseId}-sender-postcode`} className="block text-sm mb-2 text-[#7E88C3] dark:text-[#DFE3FA]">Post Code</label>
                 <input 
                   id={`${baseId}-sender-postcode`}
                   {...register('senderAddress.postCode', { required: true })}
-                  className={`w-full p-4 border rounded-md dark:bg-[#1E2139] dark:border-[#252945] font-bold outline-none border-[#DFE3FA] focus:border-[#7C5DFA] transition-all dark:text-white ${errors.senderAddress?.postCode ? 'border-red-500 dark:border-red-500' : ''}`}
+                  className={`w-full h-[56px] px-4 border rounded-md dark:bg-[#1E2139] dark:border-[#252945] font-bold outline-none border-[#DFE3FA] focus:border-[#7C5DFA] transition-all dark:text-white ${errors.senderAddress?.postCode ? 'border-red-500 dark:border-red-500' : ''}`}
                 />
               </div>
-              <div className="max-sm:col-span-2">
+              <div className="col-span-1 max-sm:col-span-2">
                 <label htmlFor={`${baseId}-sender-country`} className="block text-sm mb-2 text-[#7E88C3] dark:text-[#DFE3FA]">Country</label>
                 <input 
                   id={`${baseId}-sender-country`}
                   {...register('senderAddress.country', { required: true })}
-                  className={`w-full p-4 border rounded-md dark:bg-[#1E2139] dark:border-[#252945] font-bold outline-none border-[#DFE3FA] focus:border-[#7C5DFA] transition-all dark:text-white ${errors.senderAddress?.country ? 'border-red-500 dark:border-red-500' : ''}`}
+                  className={`w-full h-[56px] px-4 border rounded-md dark:bg-[#1E2139] dark:border-[#252945] font-bold outline-none border-[#DFE3FA] focus:border-[#7C5DFA] transition-all dark:text-white ${errors.senderAddress?.country ? 'border-red-500 dark:border-red-500' : ''}`}
                 />
               </div>
             </div>
@@ -209,7 +219,7 @@ const InvoiceForm = () => {
                 <input 
                   id={`${baseId}-client-name`}
                   {...register('clientName', { required: true })}
-                  className={`w-full p-4 border rounded-md dark:bg-[#1E2139] dark:border-[#252945] font-bold outline-none border-[#DFE3FA] focus:border-[#7C5DFA] transition-all dark:text-white ${errors.clientName ? 'border-red-500 dark:border-red-500' : ''}`}
+                  className={`w-full h-[56px] px-4 border rounded-md dark:bg-[#1E2139] dark:border-[#252945] font-bold outline-none border-[#DFE3FA] focus:border-[#7C5DFA] transition-all dark:text-white ${errors.clientName ? 'border-red-500 dark:border-red-500' : ''}`}
                 />
               </div>
               <div>
@@ -224,7 +234,7 @@ const InvoiceForm = () => {
                     pattern: /^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$/i 
                   })}
                   placeholder="e.g. email@example.com"
-                  className={`w-full p-4 border rounded-md dark:bg-[#1E2139] dark:border-[#252945] font-bold outline-none border-[#DFE3FA] focus:border-[#7C5DFA] transition-all dark:text-white ${errors.clientEmail ? 'border-red-500 dark:border-red-500' : ''}`}
+                  className={`w-full h-[56px] px-4 border rounded-md dark:bg-[#1E2139] dark:border-[#252945] font-bold outline-none border-[#DFE3FA] focus:border-[#7C5DFA] transition-all dark:text-white ${errors.clientEmail ? 'border-red-500 dark:border-red-500' : ''}`}
                 />
               </div>
               <div>
@@ -232,124 +242,141 @@ const InvoiceForm = () => {
                 <input 
                   id={`${baseId}-client-street`}
                   {...register('clientAddress.street', { required: true })}
-                  className={`w-full p-4 border rounded-md dark:bg-[#1E2139] dark:border-[#252945] font-bold outline-none border-[#DFE3FA] focus:border-[#7C5DFA] transition-all dark:text-white ${errors.clientAddress?.street ? 'border-red-500 dark:border-red-500' : ''}`}
+                  className={`w-full h-[56px] px-4 border rounded-md dark:bg-[#1E2139] dark:border-[#252945] font-bold outline-none border-[#DFE3FA] focus:border-[#7C5DFA] transition-all dark:text-white ${errors.clientAddress?.street ? 'border-red-500 dark:border-red-500' : ''}`}
                 />
               </div>
             </div>
             
-            <div className="grid grid-cols-3 gap-6 max-sm:grid-cols-2">
-              <div>
+            <div className="grid grid-cols-3 gap-6 max-sm:grid-cols-2 max-sm:gap-x-6 max-sm:gap-y-6">
+              <div className="max-sm:col-span-1">
                 <label htmlFor={`${baseId}-client-city`} className="block text-sm mb-2 text-[#7E88C3] dark:text-[#DFE3FA]">City</label>
                 <input 
                   id={`${baseId}-client-city`}
                   {...register('clientAddress.city', { required: true })}
-                  className={`w-full p-4 border rounded-md dark:bg-[#1E2139] dark:border-[#252945] font-bold outline-none border-[#DFE3FA] focus:border-[#7C5DFA] transition-all dark:text-white ${errors.clientAddress?.city ? 'border-red-500 dark:border-red-500' : ''}`}
+                  className={`w-full h-[56px] px-4 border rounded-md dark:bg-[#1E2139] dark:border-[#252945] font-bold outline-none border-[#DFE3FA] focus:border-[#7C5DFA] transition-all dark:text-white ${errors.clientAddress?.city ? 'border-red-500 dark:border-red-500' : ''}`}
                 />
               </div>
-              <div>
+              <div className="max-sm:col-span-1">
                 <label htmlFor={`${baseId}-client-postcode`} className="block text-sm mb-2 text-[#7E88C3] dark:text-[#DFE3FA]">Post Code</label>
                 <input 
                   id={`${baseId}-client-postcode`}
                   {...register('clientAddress.postCode', { required: true })}
-                  className={`w-full p-4 border rounded-md dark:bg-[#1E2139] dark:border-[#252945] font-bold outline-none border-[#DFE3FA] focus:border-[#7C5DFA] transition-all dark:text-white ${errors.clientAddress?.postCode ? 'border-red-500 dark:border-red-500' : ''}`}
+                  className={`w-full h-[56px] px-4 border rounded-md dark:bg-[#1E2139] dark:border-[#252945] font-bold outline-none border-[#DFE3FA] focus:border-[#7C5DFA] transition-all dark:text-white ${errors.clientAddress?.postCode ? 'border-red-500 dark:border-red-500' : ''}`}
                 />
               </div>
-              <div className="max-sm:col-span-2">
+              <div className="col-span-1 max-sm:col-span-2">
                 <label htmlFor={`${baseId}-client-country`} className="block text-sm mb-2 text-[#7E88C3] dark:text-[#DFE3FA]">Country</label>
                 <input 
                   id={`${baseId}-client-country`}
                   {...register('clientAddress.country', { required: true })}
-                  className={`w-full p-4 border rounded-md dark:bg-[#1E2139] dark:border-[#252945] font-bold outline-none border-[#DFE3FA] focus:border-[#7C5DFA] transition-all dark:text-white ${errors.clientAddress?.country ? 'border-red-500 dark:border-red-500' : ''}`}
+                  className={`w-full h-[56px] px-4 border rounded-md dark:bg-[#1E2139] dark:border-[#252945] font-bold outline-none border-[#DFE3FA] focus:border-[#7C5DFA] transition-all dark:text-white ${errors.clientAddress?.country ? 'border-red-500 dark:border-red-500' : ''}`}
                 />
               </div>
             </div>
           </section>
 
           {/* Configuration */}
-          <div className="grid grid-cols-2 gap-6">
-            <div>
+          <div className="grid grid-cols-2 gap-6 max-sm:grid-cols-1">
+            <div className="max-sm:col-span-1">
               <label htmlFor={`${baseId}-created-at`} className="block text-sm mb-2 text-[#7E88C3] dark:text-[#DFE3FA]">Invoice Date</label>
               <input 
                 id={`${baseId}-created-at`}
                 type="date"
                 {...register('createdAt', { required: true })}
-                className="w-full p-4 border border-[#DFE3FA] rounded-md dark:bg-[#1E2139] dark:border-[#252945] font-bold outline-none focus:border-[#7C5DFA] transition-all dark:text-white"
+                className="w-full h-[56px] px-4 border border-[#DFE3FA] rounded-md dark:bg-[#1E2139] dark:border-[#252945] font-bold outline-none focus:border-[#7C5DFA] transition-all dark:text-white"
               />
             </div>
-            <div>
+            <div className="max-sm:col-span-1">
               <label htmlFor={`${baseId}-payment-terms`} className="block text-sm mb-2 text-[#7E88C3] dark:text-[#DFE3FA]">Payment Terms</label>
               <select 
                 id={`${baseId}-payment-terms`}
                 {...register('paymentTerms', { required: true })}
-                className="w-full p-4 border border-[#DFE3FA] rounded-md dark:bg-[#1E2139] dark:border-[#252945] font-bold outline-none focus:border-[#7C5DFA] transition-all dark:text-white"
+                className="w-full h-[56px] px-4 border border-[#DFE3FA] rounded-md dark:bg-[#1E2139] dark:border-[#252945] font-bold outline-none focus:border-[#7C5DFA] transition-all dark:text-white"
               >
+
                 <option value="1">Net 1 Day</option>
                 <option value="7">Net 7 Days</option>
                 <option value="14">Net 14 Days</option>
                 <option value="30">Net 30 Days</option>
               </select>
             </div>
-            <div className="col-span-2">
+            <div className="col-span-2 max-sm:col-span-1">
               <label htmlFor={`${baseId}-description`} className="block text-sm mb-2 text-[#7E88C3] dark:text-[#DFE3FA]">Project Description</label>
               <input 
                 id={`${baseId}-description`}
                 {...register('description', { required: true })}
                 placeholder="e.g. Graphic Design Service"
-                className={`w-full p-4 border border-[#DFE3FA] rounded-md dark:bg-[#1E2139] dark:border-[#252945] font-bold outline-none focus:border-[#7C5DFA] transition-all dark:text-white ${errors.description ? 'border-red-500 dark:border-red-500' : ''}`}
+                className={`w-full h-[56px] px-4 border border-[#DFE3FA] rounded-md dark:bg-[#1E2139] dark:border-[#252945] font-bold outline-none focus:border-[#7C5DFA] transition-all dark:text-white ${errors.description ? 'border-red-500 dark:border-red-500' : ''}`}
               />
             </div>
           </div>
 
           {/* Item List */}
           <section aria-labelledby="item-list-heading">
-            <h3 id="item-list-heading" className="text-xl text-[#777F98] font-bold mb-4">Item List</h3>
-            <div className="space-y-4">
-              {fields.map((field, index) => (
-                <div key={field.id} className="grid grid-cols-[2.5fr_1fr_1.5fr_1fr_auto] gap-4 items-end max-sm:grid-cols-2 max-sm:gap-2">
-                  <div className="max-sm:col-span-2">
-                    <label htmlFor={`${baseId}-item-${index}-name`} className="block text-sm mb-2 text-[#7E88C3] dark:text-[#DFE3FA] lg:hidden">Item Name</label>
-                    <input 
-                      id={`${baseId}-item-${index}-name`}
-                      {...register(`items.${index}.name` as const, { required: true })}
-                      className={`w-full p-4 border border-[#DFE3FA] rounded-md dark:bg-[#1E2139] dark:border-[#252945] font-bold outline-none focus:border-[#7C5DFA] transition-all dark:text-white ${errors.items?.[index]?.name ? 'border-red-500 dark:border-red-500' : ''}`}
-                    />
+          {/* Item List Header (Desktop) */}
+          <div className="grid grid-cols-[2.5fr_1fr_1.5fr_1fr_auto] gap-4 mb-4 max-sm:hidden">
+            <span className="text-sm text-[#7E88C3] dark:text-[#DFE3FA]">Item Name</span>
+            <span className="text-sm text-[#7E88C3] dark:text-[#DFE3FA]">Qty.</span>
+            <span className="text-sm text-[#7E88C3] dark:text-[#DFE3FA]">Price</span>
+            <span className="text-sm text-[#7E88C3] dark:text-[#DFE3FA]">Total</span>
+            <div className="w-4"></div>
+          </div>
+
+          <div className="space-y-4">
+            {fields.map((field, index) => (
+              <div key={field.id} className="grid grid-cols-[2.5fr_1fr_1.5fr_1fr_auto] gap-4 items-end max-sm:grid-cols-4 max-sm:gap-4">
+                <div className="max-sm:col-span-4">
+                  <label htmlFor={`${baseId}-item-${index}-name`} className="block text-sm mb-2 text-[#7E88C3] dark:text-[#DFE3FA] lg:hidden">Item Name</label>
+                  <input 
+                    id={`${baseId}-item-${index}-name`}
+                    {...register(`items.${index}.name` as const, { required: true })}
+                    className={`w-full h-[56px] px-4 border border-[#DFE3FA] rounded-md dark:bg-[#1E2139] dark:border-[#252945] font-bold outline-none focus:border-[#7C5DFA] transition-all dark:text-white ${errors.items?.[index]?.name ? 'border-red-500 dark:border-red-500' : ''}`}
+                  />
+                </div>
+                <div className="max-sm:col-span-1">
+                  <label htmlFor={`${baseId}-item-${index}-qty`} className="block text-sm mb-2 text-[#7E88C3] dark:text-[#DFE3FA] lg:hidden">Qty.</label>
+                  <input 
+                    id={`${baseId}-item-${index}-qty`}
+                    type="number"
+                    {...register(`items.${index}.quantity` as const, { required: true, min: 1 })}
+                    className={`w-full h-[56px] px-4 border border-[#DFE3FA] rounded-md dark:bg-[#1E2139] dark:border-[#252945] font-bold outline-none focus:border-[#7C5DFA] transition-all dark:text-white ${errors.items?.[index]?.quantity ? 'border-red-500 dark:border-red-500' : ''}`}
+                  />
+                </div>
+                <div className="max-sm:col-span-1">
+                  <label htmlFor={`${baseId}-item-${index}-price`} className="block text-sm mb-2 text-[#7E88C3] dark:text-[#DFE3FA] lg:hidden">Price</label>
+                  <input 
+                    id={`${baseId}-item-${index}-price`}
+                    type="number"
+                    step="0.01"
+                    {...register(`items.${index}.price` as const, { required: true, min: 0.01 })}
+                    className={`w-full h-[56px] px-4 border border-[#DFE3FA] rounded-md dark:bg-[#1E2139] dark:border-[#252945] font-bold outline-none focus:border-[#7C5DFA] transition-all dark:text-white ${errors.items?.[index]?.price ? 'border-red-500 dark:border-red-500' : ''}`}
+                  />
+                </div>
+                <div className="max-sm:col-span-1">
+                  <span className="block text-sm mb-4 text-[#7E88C3] dark:text-[#DFE3FA] lg:hidden">Total</span>
+                  <div className="font-bold text-[#7E88C3] dark:text-[#DFE3FA] h-[56px] flex items-center">
+                    {items[index]?.total?.toLocaleString(undefined, { minimumFractionDigits: 2 })}
                   </div>
-                  <div>
-                    <label htmlFor={`${baseId}-item-${index}-qty`} className="block text-sm mb-2 text-[#7E88C3] dark:text-[#DFE3FA]">Qty.</label>
-                    <input 
-                      id={`${baseId}-item-${index}-qty`}
-                      type="number"
-                      {...register(`items.${index}.quantity` as const, { required: true, min: 1 })}
-                      className={`w-full p-4 border border-[#DFE3FA] rounded-md dark:bg-[#1E2139] dark:border-[#252945] font-bold outline-none focus:border-[#7C5DFA] transition-all dark:text-white ${errors.items?.[index]?.quantity ? 'border-red-500 dark:border-red-500' : ''}`}
-                    />
-                  </div>
-                  <div>
-                    <label htmlFor={`${baseId}-item-${index}-price`} className="block text-sm mb-2 text-[#7E88C3] dark:text-[#DFE3FA]">Price</label>
-                    <input 
-                      id={`${baseId}-item-${index}-price`}
-                      type="number"
-                      step="0.01"
-                      {...register(`items.${index}.price` as const, { required: true, min: 0.01 })}
-                      className={`w-full p-4 border border-[#DFE3FA] rounded-md dark:bg-[#1E2139] dark:border-[#252945] font-bold outline-none focus:border-[#7C5DFA] transition-all dark:text-white ${errors.items?.[index]?.price ? 'border-red-500 dark:border-red-500' : ''}`}
-                    />
-                  </div>
-                  <div>
-                    <span className="block text-sm mb-2 text-[#7E88C3] dark:text-[#DFE3FA]">Total</span>
-                    <div className="p-4 font-bold text-[#7E88C3] dark:text-[#DFE3FA]">
-                      {items[index]?.total?.toLocaleString(undefined, { minimumFractionDigits: 2 })}
-                    </div>
-                  </div>
+                </div>
+                <div className="max-sm:col-span-1 flex justify-end h-[56px] items-center">
                   <button 
                     type="button" 
                     onClick={() => remove(index)}
                     aria-label={`Delete item ${index + 1}`}
-                    className="p-4 text-[#7E88C3] hover:text-[#EC5757] transition-colors"
+                    className="p-3 text-[#888EB0] hover:text-[#EC5757] transition-colors"
                   >
-                    <svg width="13" height="16" xmlns="http://www.w3.org/2000/svg"><path d="M11.583 3.556v10.666c0 .982-.795 1.778-1.777 1.778H3.194a1.777 1.777 0 01-1.777-1.778V3.556h10.166zM9.25 0a.889.889 0 01.889.889v1.778H2.861V.889A.889.889 0 013.75 0h5.5z" fill="currentColor" fillRule="nonzero"/></svg>
+                    <svg width="13" height="16" viewBox="0 0 13 16" xmlns="http://www.w3.org/2000/svg">
+                      <path d="M0 2.667H13V1.333c0-.736-.597-1.333-1.333-1.333H1.333C.597 0 0 .597 0 1.333v1.334z" fill="currentColor"/>
+                      <circle cx="6.5" cy="0.8" r="0.8" fill="currentColor"/>
+                      <path d="M1.778 4.444v10.223c0 .736.597 1.333 1.333 1.333h7c.735 0 1.333-.597 1.333-1.333V4.444H1.778z" fill="currentColor"/>
+                    </svg>
                   </button>
                 </div>
-              ))}
-            </div>
+              </div>
+            ))}
+
+          </div>
+
             
             <Button 
               type="button"
@@ -364,7 +391,7 @@ const InvoiceForm = () => {
         </div>
 
         {/* Footer Actions */}
-        <footer className="mt-12 flex justify-between items-center bg-white dark:bg-[#141625] pt-8 sticky bottom-0 -mx-14 px-14 pb-8 z-10 transition-colors shadow-[0_-10px_20px_rgba(0,0,0,0.05)] dark:shadow-none">
+        <footer className="mt-12 flex justify-between items-center bg-white dark:bg-[#141625] pt-8 sticky bottom-0 -mx-14 px-14 pb-8 z-10 transition-colors shadow-[0_-10px_20px_rgba(0,0,0,0.05)] dark:shadow-none max-sm:-mx-6 max-sm:px-6">
           <Button variant="secondary" type="button" onClick={closeForm}>
             {invoiceToEdit ? 'Cancel' : 'Discard'}
           </Button>
@@ -374,16 +401,17 @@ const InvoiceForm = () => {
                 variant="secondary" 
                 type="button"
                 onClick={() => onSubmit(watch(), 'draft')}
-                className="bg-[#373B53] text-[#888EB0] hover:bg-[#0C0E16]"
+                className="bg-[#373B53] text-[#888EB0] hover:bg-[#0C0E16] max-sm:px-4"
               >
                 Save as Draft
               </Button>
             )}
-            <Button variant="primary" type="submit">
+            <Button variant="primary" type="submit" className="max-sm:px-4">
               {invoiceToEdit ? 'Save Changes' : 'Save & Send'}
             </Button>
           </div>
         </footer>
+
       </form>
     </div>
   )
