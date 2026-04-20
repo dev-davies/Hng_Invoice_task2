@@ -40,8 +40,9 @@ const InvoiceCard = ({ invoice }: InvoiceCardProps) => {
           
           {/* Total Amount (Visible on both, but col 4 on desktop) */}
           <span className="font-bold text-lg text-[#0C0E16] dark:text-white truncate max-w-[150px] md:text-xl md:text-right md:pr-10 md:max-w-none md:col-span-1">
-            £{invoice.total.toLocaleString(undefined, { minimumFractionDigits: 2 })}
+            ₦{invoice.total.toLocaleString(undefined, { minimumFractionDigits: 2 })}
           </span>
+
         </div>
 
         {/* Right side (Status) */}

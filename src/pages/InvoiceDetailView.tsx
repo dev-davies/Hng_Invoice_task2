@@ -124,12 +124,12 @@ const InvoiceDetailView = () => {
                 <div className="lg:col-span-2">
                   <p className="font-bold mb-2 lg:mb-0">{item.name}</p>
                   <p className="lg:hidden text-sm font-bold text-[#888EB0] dark:text-[#888EB0]">
-                    {item.quantity} x £{item.price.toLocaleString(undefined, { minimumFractionDigits: 2 })}
+                    {item.quantity} x ₦{item.price.toLocaleString(undefined, { minimumFractionDigits: 2 })}
                   </p>
                 </div>
                 <span className="text-center text-[#888EB0] dark:text-[#DFE3FA] font-bold max-lg:hidden">{item.quantity}</span>
-                <span className="text-right text-[#888EB0] dark:text-[#DFE3FA] font-bold max-lg:hidden">£{item.price.toLocaleString(undefined, { minimumFractionDigits: 2 })}</span>
-                <span className="text-right font-bold text-lg lg:text-base">£{item.total.toLocaleString(undefined, { minimumFractionDigits: 2 })}</span>
+                <span className="text-right text-[#888EB0] dark:text-[#DFE3FA] font-bold max-lg:hidden">₦{item.price.toLocaleString(undefined, { minimumFractionDigits: 2 })}</span>
+                <span className="text-right font-bold text-lg lg:text-base">₦{item.total.toLocaleString(undefined, { minimumFractionDigits: 2 })}</span>
               </div>
             ))}
           </div>
@@ -137,7 +137,7 @@ const InvoiceDetailView = () => {
 
         <div className="bg-[#373B53] dark:bg-[#0C0E16] p-8 lg:px-12 rounded-b-lg flex items-center justify-between text-white transition-colors">
           <span className="text-sm">Amount Due</span>
-          <span className="text-2xl lg:text-3xl font-bold">£{invoice.total.toLocaleString(undefined, { minimumFractionDigits: 2 })}</span>
+          <span className="text-2xl lg:text-3xl font-bold">₦{invoice.total.toLocaleString(undefined, { minimumFractionDigits: 2 })}</span>
         </div>
       </div>
 
