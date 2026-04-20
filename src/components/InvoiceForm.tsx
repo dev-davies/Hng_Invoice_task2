@@ -1,5 +1,5 @@
 import { useForm, useFieldArray } from 'react-hook-form'
-import { useEffect } from 'react'
+import { useEffect, useRef, useId } from 'react'
 import type { InvoiceState } from '../types'
 
 import { useInvoiceStore } from '../store/useInvoiceStore'
@@ -8,6 +8,8 @@ import Button from './Button'
 
 const InvoiceForm = () => {
   const { isFormOpen, closeForm, addInvoice, updateInvoice, invoiceToEdit } = useInvoiceStore() as InvoiceState
+  const formRef = useRef<HTMLFormElement>(null)
+  const baseId = useId()
 
   const {
     register,
@@ -66,6 +68,42 @@ const InvoiceForm = () => {
     }
   }, [invoiceToEdit, reset, isFormOpen])
 
+  // Focus Trapping and ESC Key
+  useEffect(() => {
+    if (!isFormOpen) return
+
+    const focusableElements = formRef.current?.querySelectorAll(
+      'button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])'
+    )
+    const firstElement = focusableElements?.[0] as HTMLElement
+    const lastElement = focusableElements?.[focusableElements.length - 1] as HTMLElement
+
+    const handleKeydown = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') {
+        closeForm()
+      }
+
+      if (e.key === 'Tab') {
+        if (e.shiftKey) {
+          if (document.activeElement === firstElement) {
+            e.preventDefault()
+            lastElement?.focus()
+          }
+        } else {
+          if (document.activeElement === lastElement) {
+            e.preventDefault()
+            firstElement?.focus()
+          }
+        }
+      }
+    }
+
+    window.addEventListener('keydown', handleKeydown)
+    firstElement?.focus()
+
+    return () => window.removeEventListener('keydown', handleKeydown)
+  }, [isFormOpen, closeForm])
+
   if (!isFormOpen) return null
 
   const onSubmit = (data: any, status: 'pending' | 'draft') => {
@@ -93,19 +131,24 @@ const InvoiceForm = () => {
   }
 
   return (
-    <div className="fixed inset-0 z-[100] flex">
+    <div className="fixed inset-0 z-[100] flex" role="none">
       {/* Backdrop */}
       <div 
         className="absolute inset-0 bg-black/50 transition-opacity animate-in fade-in duration-500" 
         onClick={closeForm}
+        aria-hidden="true"
       />
       
       {/* Form Content */}
       <form 
+        ref={formRef}
         onSubmit={handleSubmit((data) => onSubmit(data, 'pending'))}
+        role="dialog"
+        aria-modal="true"
+        aria-labelledby="form-title"
         className="relative w-full max-w-[720px] bg-white dark:bg-[#141625] h-full overflow-y-auto animate-in slide-in-from-left duration-500 rounded-r-[20px] p-14 max-sm:p-6 transition-colors shadow-2xl"
       >
-        <h1 className="text-3xl font-bold mb-12 dark:text-white">
+        <h1 id="form-title" className="text-3xl font-bold mb-12 dark:text-white">
           {invoiceToEdit ? (
             <>Edit <span className="text-[#888EB0]">#</span>{invoiceToEdit.id}</>
           ) : 'New Invoice'}
@@ -113,36 +156,43 @@ const InvoiceForm = () => {
 
         <div className="space-y-10">
           {/* Bill From */}
-          <section>
-            <h3 className="text-[#7C5DFA] font-bold mb-6">Bill From</h3>
+          <section aria-labelledby="bill-from-heading">
+            <h3 id="bill-from-heading" className="text-[#7C5DFA] font-bold mb-6">Bill From</h3>
             <div className="grid grid-cols-3 gap-6 max-sm:grid-cols-2">
               <div className="col-span-3">
-                <label className="flex justify-between text-sm mb-2 text-[#7E88C3] dark:text-[#DFE3FA]">
+                <label 
+                  htmlFor={`${baseId}-sender-street`}
+                  className="flex justify-between text-sm mb-2 text-[#7E88C3] dark:text-[#DFE3FA]"
+                >
                   Street Address
                   {errors.senderAddress?.street && <span className="text-red-500 text-xs">can't be empty</span>}
                 </label>
                 <input 
+                  id={`${baseId}-sender-street`}
                   {...register('senderAddress.street', { required: true })}
                   className={`w-full p-4 border rounded-md dark:bg-[#1E2139] dark:border-[#252945] font-bold outline-none border-[#DFE3FA] focus:border-[#7C5DFA] transition-all dark:text-white ${errors.senderAddress?.street ? 'border-red-500 dark:border-red-500' : ''}`}
                 />
               </div>
               <div>
-                <label className="block text-sm mb-2 text-[#7E88C3] dark:text-[#DFE3FA]">City</label>
+                <label htmlFor={`${baseId}-sender-city`} className="block text-sm mb-2 text-[#7E88C3] dark:text-[#DFE3FA]">City</label>
                 <input 
+                  id={`${baseId}-sender-city`}
                   {...register('senderAddress.city', { required: true })}
                   className={`w-full p-4 border rounded-md dark:bg-[#1E2139] dark:border-[#252945] font-bold outline-none border-[#DFE3FA] focus:border-[#7C5DFA] transition-all dark:text-white ${errors.senderAddress?.city ? 'border-red-500 dark:border-red-500' : ''}`}
                 />
               </div>
               <div>
-                <label className="block text-sm mb-2 text-[#7E88C3] dark:text-[#DFE3FA]">Post Code</label>
+                <label htmlFor={`${baseId}-sender-postcode`} className="block text-sm mb-2 text-[#7E88C3] dark:text-[#DFE3FA]">Post Code</label>
                 <input 
+                  id={`${baseId}-sender-postcode`}
                   {...register('senderAddress.postCode', { required: true })}
                   className={`w-full p-4 border rounded-md dark:bg-[#1E2139] dark:border-[#252945] font-bold outline-none border-[#DFE3FA] focus:border-[#7C5DFA] transition-all dark:text-white ${errors.senderAddress?.postCode ? 'border-red-500 dark:border-red-500' : ''}`}
                 />
               </div>
               <div className="max-sm:col-span-2">
-                <label className="block text-sm mb-2 text-[#7E88C3] dark:text-[#DFE3FA]">Country</label>
+                <label htmlFor={`${baseId}-sender-country`} className="block text-sm mb-2 text-[#7E88C3] dark:text-[#DFE3FA]">Country</label>
                 <input 
+                  id={`${baseId}-sender-country`}
                   {...register('senderAddress.country', { required: true })}
                   className={`w-full p-4 border rounded-md dark:bg-[#1E2139] dark:border-[#252945] font-bold outline-none border-[#DFE3FA] focus:border-[#7C5DFA] transition-all dark:text-white ${errors.senderAddress?.country ? 'border-red-500 dark:border-red-500' : ''}`}
                 />
@@ -151,22 +201,24 @@ const InvoiceForm = () => {
           </section>
 
           {/* Bill To */}
-          <section>
-            <h3 className="text-[#7C5DFA] font-bold mb-6">Bill To</h3>
+          <section aria-labelledby="bill-to-heading">
+            <h3 id="bill-to-heading" className="text-[#7C5DFA] font-bold mb-6">Bill To</h3>
             <div className="space-y-6 mb-6">
               <div>
-                <label className="block text-sm mb-2 text-[#7E88C3] dark:text-[#DFE3FA]">Client's Name</label>
+                <label htmlFor={`${baseId}-client-name`} className="block text-sm mb-2 text-[#7E88C3] dark:text-[#DFE3FA]">Client's Name</label>
                 <input 
+                  id={`${baseId}-client-name`}
                   {...register('clientName', { required: true })}
                   className={`w-full p-4 border rounded-md dark:bg-[#1E2139] dark:border-[#252945] font-bold outline-none border-[#DFE3FA] focus:border-[#7C5DFA] transition-all dark:text-white ${errors.clientName ? 'border-red-500 dark:border-red-500' : ''}`}
                 />
               </div>
               <div>
-                <label className="flex justify-between text-sm mb-2 text-[#7E88C3] dark:text-[#DFE3FA]">
+                <label htmlFor={`${baseId}-client-email`} className="flex justify-between text-sm mb-2 text-[#7E88C3] dark:text-[#DFE3FA]">
                   Client's Email
                   {errors.clientEmail && <span className="text-red-500 text-xs">invalid format</span>}
                 </label>
                 <input 
+                  id={`${baseId}-client-email`}
                   {...register('clientEmail', { 
                     required: true, 
                     pattern: /^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$/i 
@@ -176,8 +228,9 @@ const InvoiceForm = () => {
                 />
               </div>
               <div>
-                <label className="block text-sm mb-2 text-[#7E88C3] dark:text-[#DFE3FA]">Street Address</label>
+                <label htmlFor={`${baseId}-client-street`} className="block text-sm mb-2 text-[#7E88C3] dark:text-[#DFE3FA]">Street Address</label>
                 <input 
+                  id={`${baseId}-client-street`}
                   {...register('clientAddress.street', { required: true })}
                   className={`w-full p-4 border rounded-md dark:bg-[#1E2139] dark:border-[#252945] font-bold outline-none border-[#DFE3FA] focus:border-[#7C5DFA] transition-all dark:text-white ${errors.clientAddress?.street ? 'border-red-500 dark:border-red-500' : ''}`}
                 />
@@ -186,22 +239,25 @@ const InvoiceForm = () => {
             
             <div className="grid grid-cols-3 gap-6 max-sm:grid-cols-2">
               <div>
-                <label className="block text-sm mb-2 text-[#7E88C3] dark:text-[#DFE3FA]">City</label>
+                <label htmlFor={`${baseId}-client-city`} className="block text-sm mb-2 text-[#7E88C3] dark:text-[#DFE3FA]">City</label>
                 <input 
+                  id={`${baseId}-client-city`}
                   {...register('clientAddress.city', { required: true })}
                   className={`w-full p-4 border rounded-md dark:bg-[#1E2139] dark:border-[#252945] font-bold outline-none border-[#DFE3FA] focus:border-[#7C5DFA] transition-all dark:text-white ${errors.clientAddress?.city ? 'border-red-500 dark:border-red-500' : ''}`}
                 />
               </div>
               <div>
-                <label className="block text-sm mb-2 text-[#7E88C3] dark:text-[#DFE3FA]">Post Code</label>
+                <label htmlFor={`${baseId}-client-postcode`} className="block text-sm mb-2 text-[#7E88C3] dark:text-[#DFE3FA]">Post Code</label>
                 <input 
+                  id={`${baseId}-client-postcode`}
                   {...register('clientAddress.postCode', { required: true })}
                   className={`w-full p-4 border rounded-md dark:bg-[#1E2139] dark:border-[#252945] font-bold outline-none border-[#DFE3FA] focus:border-[#7C5DFA] transition-all dark:text-white ${errors.clientAddress?.postCode ? 'border-red-500 dark:border-red-500' : ''}`}
                 />
               </div>
               <div className="max-sm:col-span-2">
-                <label className="block text-sm mb-2 text-[#7E88C3] dark:text-[#DFE3FA]">Country</label>
+                <label htmlFor={`${baseId}-client-country`} className="block text-sm mb-2 text-[#7E88C3] dark:text-[#DFE3FA]">Country</label>
                 <input 
+                  id={`${baseId}-client-country`}
                   {...register('clientAddress.country', { required: true })}
                   className={`w-full p-4 border rounded-md dark:bg-[#1E2139] dark:border-[#252945] font-bold outline-none border-[#DFE3FA] focus:border-[#7C5DFA] transition-all dark:text-white ${errors.clientAddress?.country ? 'border-red-500 dark:border-red-500' : ''}`}
                 />
@@ -212,16 +268,18 @@ const InvoiceForm = () => {
           {/* Configuration */}
           <div className="grid grid-cols-2 gap-6">
             <div>
-              <label className="block text-sm mb-2 text-[#7E88C3] dark:text-[#DFE3FA]">Invoice Date</label>
+              <label htmlFor={`${baseId}-created-at`} className="block text-sm mb-2 text-[#7E88C3] dark:text-[#DFE3FA]">Invoice Date</label>
               <input 
+                id={`${baseId}-created-at`}
                 type="date"
                 {...register('createdAt', { required: true })}
                 className="w-full p-4 border border-[#DFE3FA] rounded-md dark:bg-[#1E2139] dark:border-[#252945] font-bold outline-none focus:border-[#7C5DFA] transition-all dark:text-white"
               />
             </div>
             <div>
-              <label className="block text-sm mb-2 text-[#7E88C3] dark:text-[#DFE3FA]">Payment Terms</label>
+              <label htmlFor={`${baseId}-payment-terms`} className="block text-sm mb-2 text-[#7E88C3] dark:text-[#DFE3FA]">Payment Terms</label>
               <select 
+                id={`${baseId}-payment-terms`}
                 {...register('paymentTerms', { required: true })}
                 className="w-full p-4 border border-[#DFE3FA] rounded-md dark:bg-[#1E2139] dark:border-[#252945] font-bold outline-none focus:border-[#7C5DFA] transition-all dark:text-white"
               >
@@ -232,8 +290,9 @@ const InvoiceForm = () => {
               </select>
             </div>
             <div className="col-span-2">
-              <label className="block text-sm mb-2 text-[#7E88C3] dark:text-[#DFE3FA]">Project Description</label>
+              <label htmlFor={`${baseId}-description`} className="block text-sm mb-2 text-[#7E88C3] dark:text-[#DFE3FA]">Project Description</label>
               <input 
+                id={`${baseId}-description`}
                 {...register('description', { required: true })}
                 placeholder="e.g. Graphic Design Service"
                 className={`w-full p-4 border border-[#DFE3FA] rounded-md dark:bg-[#1E2139] dark:border-[#252945] font-bold outline-none focus:border-[#7C5DFA] transition-all dark:text-white ${errors.description ? 'border-red-500 dark:border-red-500' : ''}`}
@@ -242,29 +301,32 @@ const InvoiceForm = () => {
           </div>
 
           {/* Item List */}
-          <section>
-            <h3 className="text-xl text-[#777F98] font-bold mb-4">Item List</h3>
+          <section aria-labelledby="item-list-heading">
+            <h3 id="item-list-heading" className="text-xl text-[#777F98] font-bold mb-4">Item List</h3>
             <div className="space-y-4">
               {fields.map((field, index) => (
                 <div key={field.id} className="grid grid-cols-[2.5fr_1fr_1.5fr_1fr_auto] gap-4 items-end max-sm:grid-cols-2 max-sm:gap-2">
                   <div className="max-sm:col-span-2">
-                    <label className="block text-sm mb-2 text-[#7E88C3] dark:text-[#DFE3FA] lg:hidden">Item Name</label>
+                    <label htmlFor={`${baseId}-item-${index}-name`} className="block text-sm mb-2 text-[#7E88C3] dark:text-[#DFE3FA] lg:hidden">Item Name</label>
                     <input 
+                      id={`${baseId}-item-${index}-name`}
                       {...register(`items.${index}.name` as const, { required: true })}
                       className={`w-full p-4 border border-[#DFE3FA] rounded-md dark:bg-[#1E2139] dark:border-[#252945] font-bold outline-none focus:border-[#7C5DFA] transition-all dark:text-white ${errors.items?.[index]?.name ? 'border-red-500 dark:border-red-500' : ''}`}
                     />
                   </div>
                   <div>
-                    <label className="block text-sm mb-2 text-[#7E88C3] dark:text-[#DFE3FA]">Qty.</label>
+                    <label htmlFor={`${baseId}-item-${index}-qty`} className="block text-sm mb-2 text-[#7E88C3] dark:text-[#DFE3FA]">Qty.</label>
                     <input 
+                      id={`${baseId}-item-${index}-qty`}
                       type="number"
                       {...register(`items.${index}.quantity` as const, { required: true, min: 1 })}
                       className={`w-full p-4 border border-[#DFE3FA] rounded-md dark:bg-[#1E2139] dark:border-[#252945] font-bold outline-none focus:border-[#7C5DFA] transition-all dark:text-white ${errors.items?.[index]?.quantity ? 'border-red-500 dark:border-red-500' : ''}`}
                     />
                   </div>
                   <div>
-                    <label className="block text-sm mb-2 text-[#7E88C3] dark:text-[#DFE3FA]">Price</label>
+                    <label htmlFor={`${baseId}-item-${index}-price`} className="block text-sm mb-2 text-[#7E88C3] dark:text-[#DFE3FA]">Price</label>
                     <input 
+                      id={`${baseId}-item-${index}-price`}
                       type="number"
                       step="0.01"
                       {...register(`items.${index}.price` as const, { required: true, min: 0.01 })}
@@ -272,7 +334,7 @@ const InvoiceForm = () => {
                     />
                   </div>
                   <div>
-                    <label className="block text-sm mb-2 text-[#7E88C3] dark:text-[#DFE3FA]">Total</label>
+                    <span className="block text-sm mb-2 text-[#7E88C3] dark:text-[#DFE3FA]">Total</span>
                     <div className="p-4 font-bold text-[#7E88C3] dark:text-[#DFE3FA]">
                       {items[index]?.total?.toLocaleString(undefined, { minimumFractionDigits: 2 })}
                     </div>
@@ -280,6 +342,7 @@ const InvoiceForm = () => {
                   <button 
                     type="button" 
                     onClick={() => remove(index)}
+                    aria-label={`Delete item ${index + 1}`}
                     className="p-4 text-[#7E88C3] hover:text-[#EC5757] transition-colors"
                   >
                     <svg width="13" height="16" xmlns="http://www.w3.org/2000/svg"><path d="M11.583 3.556v10.666c0 .982-.795 1.778-1.777 1.778H3.194a1.777 1.777 0 01-1.777-1.778V3.556h10.166zM9.25 0a.889.889 0 01.889.889v1.778H2.861V.889A.889.889 0 013.75 0h5.5z" fill="currentColor" fillRule="nonzero"/></svg>
@@ -301,7 +364,7 @@ const InvoiceForm = () => {
         </div>
 
         {/* Footer Actions */}
-        <footer className="mt-12 flex justify-between items-center bg-white dark:bg-[#141625] pt-8 sticky bottom-0 -mx-14 px-14 pb-8 z-10 transition-colors">
+        <footer className="mt-12 flex justify-between items-center bg-white dark:bg-[#141625] pt-8 sticky bottom-0 -mx-14 px-14 pb-8 z-10 transition-colors shadow-[0_-10px_20px_rgba(0,0,0,0.05)] dark:shadow-none">
           <Button variant="secondary" type="button" onClick={closeForm}>
             {invoiceToEdit ? 'Cancel' : 'Discard'}
           </Button>

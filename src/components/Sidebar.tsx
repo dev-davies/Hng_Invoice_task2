@@ -28,13 +28,13 @@ const Sidebar = () => {
         {/* Theme Toggle */}
         <button 
           onClick={toggleTheme}
-          className="mb-8 max-lg:mb-0 max-lg:mr-8 hover:opacity-80 transition-opacity"
-          aria-label="Toggle Theme"
+          className="mb-8 max-lg:mb-0 max-lg:mr-8 hover:text-[#DFE3FA] transition-all duration-300 flex items-center justify-center hover:scale-110 active:scale-95"
+          aria-label={`Switch to ${theme === 'light' ? 'dark' : 'light'} mode`}
         >
-          {isDarkMode ? (
-            <svg width="20" height="20" xmlns="http://www.w3.org/2000/svg"><path d="M10 0a.625.625 0 00-.625.625v1.25a.625.625 0 001.25 0v-1.25A.625.625 0 0010 0zm4.243 1.757a.625.625 0 00-.884.884l.884.884a.625.625 0 00.884-.884l-.884-.884zM18.125 9.375h-1.25a.625.625 0 000 1.25h1.25a.625.625 0 000-1.25zm-1.507 4.511a.625.625 0 00-.884.004l-.884.884 a.625.625 0 00.884.884l.884-.884a.625.625 0 00.004-.888zM10 18.125a.625.625 0 00-.625.625v1.25a.625.625 0 001.25 0v-1.25A.625.625 0 0010 18.125zm-4.243-1.757a.625.625 0 00-.884-.884l-.884-.884a.625.625 0 10-.884.884l.884.884zM1.875 10.625h1.25a.625.625 0 000-1.25h-1.25a.625.625 0 000 1.25zm1.507-4.511a.625.625 0 00.884-.004l.884-.884a.625.625 0 00-.884-.884l-.884.884a.625.625 0 00-.004.888zM10 5a5 5 0 100 10 5 5 0 000-10z" fill="#7E88C3" fillRule="nonzero"/></svg>
+          {theme === 'light' ? (
+            <svg className="transition-all duration-500" width="20" height="20" xmlns="http://www.w3.org/2000/svg"><path d="M13.746 9.347A4.724 4.724 0 0015.333 6 4.667 4.667 0 0010.667 1.333 4.667 4.667 0 006 6c0 1.276.511 2.43 1.334 3.27a4.59 4.59 0 00-1.454 3.351A4.667 4.667 0 0010.547 17a4.667 4.667 0 004.667-4.667 4.59 4.59 0 00-1.468-2.986zM10.667 16a3.333 3.333 0 01-3.334-3.333 3.333 3.333 0 013.334-3.334A3.333 3.333 0 0114 12.667 3.333 3.333 0 0110.667 16z" fill="#7E88C3" fillRule="nonzero"/></svg>
           ) : (
-            <svg width="20" height="20" xmlns="http://www.w3.org/2000/svg"><path d="M9.374.627a.625.625 0 00-.598.446 8.869 8.869 0 00-.183 3.186 8.89 8.89 0 001.38 4.23 8.877 8.877 0 002.81 2.81 8.89 8.89 0 004.23 1.38c.373.023.746.023 1.116 0 a.625.625 0 00.41-.989 7.505 7.505 0 01-5.18-8.062 7.505 7.505 0 01-3.987-2.201z" fill="#7E88C3" fillRule="nonzero"/></svg>
+            <svg className="transition-all duration-500" width="20" height="20" xmlns="http://www.w3.org/2000/svg"><path d="M9.819 19.181a9.202 9.202 0 01-9-9.19 9.202 9.202 0 019.19-9.19 9.202 9.202 0 019.191 9.19 9.202 9.202 0 01-9.381 9.19z" fill="#858BB2" fillRule="nonzero"/></svg>
           )}
         </button>
 
@@ -43,7 +43,7 @@ const Sidebar = () => {
 
         {/* Profile Image (Dummy) */}
         <div className="p-6">
-          <img src="https://i.pravatar.cc/40?u=invoiceapp" alt="Avatar" className="w-[40px] h-[40px] rounded-full border-2 border-transparent hover:border-[#7C5DFA] transition-colors cursor-pointer" />
+          <img src="https://i.pravatar.cc/40?u=invoiceapp" alt="Avatar" className="w-[40px] h-[40px] rounded-full border-2 border-transparent hover:border-[#7C5DFA] transition-all duration-300 cursor-pointer" />
         </div>
       </div>
     </aside>
