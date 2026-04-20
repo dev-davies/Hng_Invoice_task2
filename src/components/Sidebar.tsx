@@ -32,10 +32,18 @@ const Sidebar = () => {
           aria-label={`Switch to ${theme === 'light' ? 'dark' : 'light'} mode`}
         >
           {theme === 'light' ? (
-            <svg className="transition-all duration-500" width="20" height="20" xmlns="http://www.w3.org/2000/svg"><path d="M13.746 9.347A4.724 4.724 0 0015.333 6 4.667 4.667 0 0010.667 1.333 4.667 4.667 0 006 6c0 1.276.511 2.43 1.334 3.27a4.59 4.59 0 00-1.454 3.351A4.667 4.667 0 0010.547 17a4.667 4.667 0 004.667-4.667 4.59 4.59 0 00-1.468-2.986zM10.667 16a3.333 3.333 0 01-3.334-3.333 3.333 3.333 0 013.334-3.334A3.333 3.333 0 0114 12.667 3.333 3.333 0 0110.667 16z" fill="#7E88C3" fillRule="nonzero"/></svg>
+            /* Crescent Moon for switching to Dark Mode */
+            <svg className="transition-all duration-500 hover:fill-[#DFE3FA]" width="20" height="20" xmlns="http://www.w3.org/2000/svg">
+              <path d="M19.502 11.342a.703.703 0 00-.588.128 7.499 7.499 0 01-11.45-6.386.701.701 0 00-.738-.725 9.195 9.195 0 00-1.126 14.82 9.195 9.195 0 0013.903-7.14.703.703 0 00-.001-.697z" fill="#7E88C3" fillRule="nonzero"/>
+            </svg>
           ) : (
-            <svg className="transition-all duration-500" width="20" height="20" xmlns="http://www.w3.org/2000/svg"><path d="M9.819 19.181a9.202 9.202 0 01-9-9.19 9.202 9.202 0 019.19-9.19 9.202 9.202 0 019.191 9.19 9.202 9.202 0 01-9.381 9.19z" fill="#858BB2" fillRule="nonzero"/></svg>
+            /* Small Circle Sun for switching to Light Mode */
+            <svg className="transition-all duration-500 hover:fill-[#DFE3FA]" width="20" height="20" xmlns="http://www.w3.org/2000/svg">
+              <path d="M10 15a5 5 0 100-10 5 5 0 000 10z" fill="#858BB2" />
+              <path d="M10 0v2.5M10 17.5V20M20 10h-2.5M2.5 10H0M17.071 2.929l-1.768 1.768M4.697 15.303l-1.768 1.768M17.071 17.071l-1.768-1.768M4.697 4.697L2.929 2.929" stroke="#858BB2" strokeWidth="2" strokeLinecap="round" />
+            </svg>
           )}
+
         </button>
 
         {/* Divider */}
