@@ -1,5 +1,6 @@
 import { useEffect } from 'react'
 import { useInvoiceStore } from '../store/useInvoiceStore'
+import Logo from '../assets/logo.svg'
 
 const Sidebar = () => {
   const { theme, toggleTheme } = useInvoiceStore()
@@ -18,10 +19,9 @@ const Sidebar = () => {
       {/* Logo Container */}
       <div className="relative w-full h-[103px] bg-[#7C5DFA] rounded-r-[20px] flex items-center justify-center overflow-hidden max-lg:w-[80px] max-lg:h-full">
         <div className="absolute bottom-0 left-0 w-full h-1/2 bg-[#9277FF] rounded-tl-[20px]"></div>
-        <svg xmlns="http://www.w3.org/2000/svg" width="28" height="26" className="relative z-10">
-          <path fill="#FFF" fillRule="evenodd" d="M20.513 0C24.965 2.309 28 6.91 28 12.21 28 19.826 21.732 26 14 26S0 19.826 0 12.21C0 6.91 3.035 2.309 7.487 0L14 12.9z"/>
-        </svg>
+        <img src={Logo} alt="Logo" className="relative z-10 w-[28px] h-[26px]" />
       </div>
+
 
       {/* Bottom Section */}
       <div className="flex flex-col items-center w-full max-lg:flex-row max-lg:w-auto max-lg:h-full">
