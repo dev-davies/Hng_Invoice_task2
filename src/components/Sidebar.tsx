@@ -16,11 +16,10 @@ const Sidebar = () => {
 
   return (
     <aside className="fixed left-0 top-0 bottom-0 w-[103px] bg-[#373B53] dark:bg-[#1E2139] flex flex-col justify-between items-center z-50 rounded-r-[20px] max-lg:w-full max-lg:h-[80px] max-lg:flex-row max-lg:rounded-none">
-      {/* Logo Container */}
-      <div className="relative w-full h-[103px] bg-[#7C5DFA] rounded-r-[20px] flex items-center justify-center overflow-hidden max-lg:w-[80px] max-lg:h-full">
-        <div className="absolute bottom-0 left-0 w-full h-1/2 bg-[#9277FF] rounded-tl-[20px]"></div>
-        <img src={Logo} alt="Logo" className="relative z-10 w-[28px] h-[26px]" />
+      <div className="relative w-full h-[103px] bg-[#7C5DFA] rounded-r-[20px] overflow-hidden max-lg:w-[80px] max-lg:h-full cursor-pointer hover:opacity-90 transition-opacity">
+        <img src={Logo} alt="Logo" className="w-full h-full object-cover" />
       </div>
+
 
 
       {/* Bottom Section */}
@@ -47,7 +46,8 @@ const Sidebar = () => {
         </button>
 
         {/* Divider */}
-        <div className="w-[1px] h-[103px] lg:w-full lg:h-[1px] bg-[#494E6E] mb-0 lg:mb-0"></div>
+        <div className="w-[1px] h-full lg:w-full lg:h-[1px] bg-[#494E6E]"></div>
+
 
         {/* Profile Image (Dummy) */}
         <div className="p-6">
