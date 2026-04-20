@@ -45,26 +45,26 @@ const HomeView = () => {
   )
 
   return (
-    <div className="max-w-3xl mx-auto pb-20 animate-in fade-in slide-in-from-bottom-4 duration-500">
-      <header className="flex items-center justify-between mb-16 max-sm:mb-8">
+    <div className="max-w-3xl mx-auto pb-20 px-6 lg:px-0 animate-in fade-in slide-in-from-bottom-4 duration-500">
+      <header className="flex items-center justify-between mb-8 md:mb-16">
         <div>
-          <h1 className="text-3xl font-bold lg:text-4xl mb-2 dark:text-white transition-colors">Invoices</h1>
-          <p className="text-[#888EB0] dark:text-[#DFE3FA] text-sm transition-colors">
-            <span className="max-sm:hidden">There are </span>
+          <h1 className="text-2xl md:text-3xl lg:text-4xl font-bold mb-1 md:mb-2 dark:text-white transition-colors">Invoices</h1>
+          <p className="text-[#888EB0] dark:text-[#DFE3FA] text-xs md:text-sm transition-colors">
+            <span className="hidden md:inline">There are </span>
             {filteredInvoices.length} 
-            <span className="max-sm:hidden"> total</span> invoices
+            <span className="hidden md:inline"> total</span> invoices
           </p>
         </div>
 
-        <div className="flex items-center gap-10 max-sm:gap-4">
+        <div className="flex items-center gap-4 md:gap-10">
           <div className="relative" ref={filterRef}>
             <button 
               onClick={() => setIsFilterOpen(!isFilterOpen)}
               aria-haspopup="listbox"
               aria-expanded={isFilterOpen}
-              className="flex items-center gap-4 font-bold hover:text-[#888EB0] transition-colors focus:outline-none focus:ring-2 focus:ring-[#7C5DFA] rounded-md px-2 py-1"
+              className="flex items-center gap-3 md:gap-4 font-bold hover:text-[#888EB0] transition-colors focus:outline-none focus:ring-2 focus:ring-[#7C5DFA] rounded-md px-2 py-1"
             >
-              Filter <span className="max-sm:hidden">by status</span>
+              Filter <span className="hidden md:inline">by status</span>
               <svg 
                 className={`transition-transform duration-300 ${isFilterOpen ? 'rotate-180' : ''}`} 
                 width="11" height="7" xmlns="http://www.w3.org/2000/svg"
@@ -72,6 +72,7 @@ const HomeView = () => {
                 <path d="M1 1l4.228 4.228L9.456 1" stroke="#7C5DFA" strokeWidth="2" fill="none" fillRule="evenodd"/>
               </svg>
             </button>
+
 
             {isFilterOpen && (
               <div 
