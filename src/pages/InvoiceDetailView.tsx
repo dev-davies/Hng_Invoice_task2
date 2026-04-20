@@ -1,12 +1,16 @@
+import { useState } from 'react'
 import { useParams, useNavigate, Link } from 'react-router-dom'
 import { useInvoiceStore } from '../store/useInvoiceStore'
 import StatusBadge from '../components/StatusBadge'
 import Button from '../components/Button'
+import DeleteModal from '../components/DeleteModal'
 
 const InvoiceDetailView = () => {
   const { id } = useParams()
   const navigate = useNavigate()
   const { invoices, markAsPaid, deleteInvoice, openForm } = useInvoiceStore()
+  const [showDeleteModal, setShowDeleteModal] = useState(false)
+
 
   
   const invoice = invoices.find(inv => inv.id === id)
@@ -20,10 +24,15 @@ const InvoiceDetailView = () => {
     )
   }
 
-  const handleDelete = () => {
+  const confirmDelete = () => {
     deleteInvoice(invoice.id)
     navigate('/')
   }
+
+  const cancelDelete = () => {
+    setShowDeleteModal(false)
+  }
+
 
   return (
     <div className="max-w-3xl mx-auto pb-20 animate-in fade-in slide-in-from-bottom-4 duration-500">
@@ -45,7 +54,8 @@ const InvoiceDetailView = () => {
         
         <div className="flex items-center gap-2 max-sm:hidden">
           <Button variant="secondary" onClick={() => openForm(invoice)}>Edit</Button>
-          <Button variant="danger" onClick={handleDelete}>Delete</Button>
+          <Button variant="danger" onClick={() => setShowDeleteModal(true)}>Delete</Button>
+
 
           {invoice.status === 'pending' && (
             <Button variant="primary" onClick={() => markAsPaid(invoice.id)}>Mark as Paid</Button>
@@ -134,14 +144,23 @@ const InvoiceDetailView = () => {
       {/* Mobile Actions Bar */}
       <div className="fixed bottom-0 left-0 right-0 p-6 bg-white dark:bg-[#1E2139] flex items-center justify-center gap-2 lg:hidden shadow-[0_-10px_20px_rgba(0,0,0,0.05)]">
         <Button variant="secondary" onClick={() => openForm(invoice)}>Edit</Button>
-        <Button variant="danger" onClick={handleDelete}>Delete</Button>
+        <Button variant="danger" onClick={() => setShowDeleteModal(true)}>Delete</Button>
+
 
         {invoice.status === 'pending' && (
           <Button variant="primary" onClick={() => markAsPaid(invoice.id)}>Mark as Paid</Button>
         )}
       </div>
+      {showDeleteModal && (
+        <DeleteModal 
+          invoiceId={invoice.id} 
+          onConfirm={confirmDelete} 
+          onCancel={cancelDelete} 
+        />
+      )}
     </div>
   )
 }
+
 
 export default InvoiceDetailView
