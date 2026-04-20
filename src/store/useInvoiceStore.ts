@@ -9,9 +9,15 @@ export const useInvoiceStore = create<InvoiceState>()(
     (set) => ({
       invoices: dummyInvoices,
       theme: 'light',
+      isFormOpen: false,
+      invoiceToEdit: null,
       
+      openForm: (invoice) => set({ isFormOpen: true, invoiceToEdit: invoice || null }),
+      closeForm: () => set({ isFormOpen: false, invoiceToEdit: null }),
+
       addInvoice: (invoice: Invoice) => 
-        set((state) => ({ invoices: [...state.invoices, invoice] })),
+        set((state) => ({ invoices: [...state.invoices, invoice], isFormOpen: false })),
+
       
       updateInvoice: (id: string, updatedInvoice: Partial<Invoice>) =>
         set((state) => ({

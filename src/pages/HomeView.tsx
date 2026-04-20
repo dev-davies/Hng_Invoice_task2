@@ -4,8 +4,9 @@ import InvoiceCard from '../components/InvoiceCard'
 import Button from '../components/Button'
 
 const HomeView = () => {
-  const { invoices } = useInvoiceStore()
+  const { invoices, openForm } = useInvoiceStore()
   const [isFilterOpen, setIsFilterOpen] = useState(false)
+
   const [activeFilters, setActiveFilters] = useState<string[]>(['draft', 'pending', 'paid'])
 
   const toggleFilter = (status: string) => {
@@ -63,12 +64,13 @@ const HomeView = () => {
             )}
           </div>
 
-          <Button variant="primary" className="gap-4 pl-2 pr-6 py-2">
+          <Button variant="primary" className="gap-4 pl-2 pr-6 py-2" onClick={() => openForm()}>
             <div className="w-8 h-8 bg-white rounded-full flex items-center justify-center">
               <svg width="11" height="11" xmlns="http://www.w3.org/2000/svg"><path d="M6.313 10.031V6.313h3.718V4.687H6.313V.969H4.687v3.718H.969v1.626h3.718v3.718z" fill="#7C5DFA" fillRule="nonzero"/></svg>
             </div>
             New <span className="max-sm:hidden">Invoice</span>
           </Button>
+
         </div>
       </header>
 

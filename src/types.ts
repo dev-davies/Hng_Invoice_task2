@@ -32,9 +32,14 @@ export type Theme = 'light' | 'dark'
 export interface InvoiceState {
   invoices: Invoice[]
   theme: Theme
+  isFormOpen: boolean
+  invoiceToEdit: Invoice | null
+  openForm: (invoice?: Invoice) => void
+  closeForm: () => void
   addInvoice: (invoice: Invoice) => void
   updateInvoice: (id: string, updatedInvoice: Partial<Invoice>) => void
   deleteInvoice: (id: string) => void
   markAsPaid: (id: string) => void
   toggleTheme: () => void
 }
+
