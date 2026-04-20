@@ -1,10 +1,19 @@
-import { useForm, useFieldArray } from 'react-hook-form'
+import { useForm, useFieldArray, Controller } from 'react-hook-form'
 import { useEffect, useRef, useId } from 'react'
 import type { InvoiceState } from '../types'
 
 import { useInvoiceStore } from '../store/useInvoiceStore'
 import { generateID } from '../utils/helpers'
 import Button from './Button'
+import CustomDatePicker from './CustomDatePicker'
+import CustomSelect from './CustomSelect'
+
+const paymentTermsOptions = [
+  { label: 'Net 1 Day', value: 1 },
+  { label: 'Net 7 Days', value: 7 },
+  { label: 'Net 14 Days', value: 14 },
+  { label: 'Net 30 Days', value: 30 },
+]
 
 const InvoiceForm = () => {
   const { isFormOpen, closeForm, addInvoice, updateInvoice, invoiceToEdit } = useInvoiceStore() as InvoiceState
@@ -278,28 +287,37 @@ const InvoiceForm = () => {
           {/* Configuration */}
           <div className="grid grid-cols-2 gap-6 max-sm:grid-cols-1">
             <div className="max-sm:col-span-1">
-              <label htmlFor={`${baseId}-created-at`} className="block text-sm mb-2 text-[#7E88C3] dark:text-[#DFE3FA]">Invoice Date</label>
-              <input 
-                id={`${baseId}-created-at`}
-                type="date"
-                {...register('createdAt', { required: true })}
-                className="w-full h-[56px] px-4 border border-[#DFE3FA] rounded-md dark:bg-[#1E2139] dark:border-[#252945] font-bold outline-none focus:border-[#7C5DFA] transition-all dark:text-white"
+              <Controller
+                control={control}
+                name="createdAt"
+                rules={{ required: true }}
+                render={({ field }) => (
+                  <CustomDatePicker
+                    id={`${baseId}-created-at`}
+                    label="Invoice Date"
+                    value={field.value}
+                    onChange={field.onChange}
+                  />
+                )}
               />
             </div>
             <div className="max-sm:col-span-1">
-              <label htmlFor={`${baseId}-payment-terms`} className="block text-sm mb-2 text-[#7E88C3] dark:text-[#DFE3FA]">Payment Terms</label>
-              <select 
-                id={`${baseId}-payment-terms`}
-                {...register('paymentTerms', { required: true })}
-                className="w-full h-[56px] px-4 border border-[#DFE3FA] rounded-md dark:bg-[#1E2139] dark:border-[#252945] font-bold outline-none focus:border-[#7C5DFA] transition-all dark:text-white"
-              >
-
-                <option value="1">Net 1 Day</option>
-                <option value="7">Net 7 Days</option>
-                <option value="14">Net 14 Days</option>
-                <option value="30">Net 30 Days</option>
-              </select>
+              <Controller
+                control={control}
+                name="paymentTerms"
+                rules={{ required: true }}
+                render={({ field }) => (
+                  <CustomSelect
+                    id={`${baseId}-payment-terms`}
+                    label="Payment Terms"
+                    options={paymentTermsOptions}
+                    value={field.value}
+                    onChange={field.onChange}
+                  />
+                )}
+              />
             </div>
+
             <div className="col-span-2 max-sm:col-span-1">
               <label htmlFor={`${baseId}-description`} className="block text-sm mb-2 text-[#7E88C3] dark:text-[#DFE3FA]">Project Description</label>
               <input 
