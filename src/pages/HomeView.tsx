@@ -2,6 +2,7 @@ import { useState, useRef, useEffect } from 'react'
 import { useInvoiceStore } from '../store/useInvoiceStore'
 import InvoiceCard from '../components/InvoiceCard'
 import Button from '../components/Button'
+import NoInvoiceIcon from '../assets/no_invoice.svg'
 
 
 const HomeView = () => {
@@ -120,13 +121,7 @@ const HomeView = () => {
         </div>
       ) : (
         <div className="mt-20 flex flex-col items-center text-center animate-in fade-in zoom-in duration-700">
-          <svg className="mb-10" width="242" height="200" xmlns="http://www.w3.org/2000/svg">
-            <g fill="none" fillRule="evenodd">
-              <path d="M220.016 112.593c-2.433-21.734-19.349-38.995-40.016-41.13a48.067 48.067 0 00-41.51-24.032c-20.73 0-38.6 13.064-45.316 31.393-2.316-.364-4.66-.543-7.004-.543-25.56 0-46.16 20.301-46.16 45.495 0 .285.002.57.007.854C16.892 130.638 0 152.052 0 177.103c0 1.298.046 2.595.137 3.89h241.727c.09-1.295.136-2.592.136-3.89 0-29.3-22.39-44.51-31.984-64.51z" fill="#F9FAFE" />
-              <path d="M121 0l11 31H110l11-31z" fill="#7C5DFA" opacity=".247" />
-              <path d="M194 40l5 14h-10l5-14zM47 50l4 10h-8l4-10z" fill="#7C5DFA" opacity=".103" />
-            </g>
-          </svg>
+          <img src={NoInvoiceIcon} alt="No invoices here" className="mb-10 w-[242px] object-contain" />
           <h2 className="text-2xl font-bold mb-4 dark:text-white transition-colors">There is nothing here</h2>
           <p className="text-[#888EB0] dark:text-[#DFE3FA] max-w-[220px] transition-colors">
             Create an invoice by clicking the <span className="font-bold">New Invoice</span> button and get started
