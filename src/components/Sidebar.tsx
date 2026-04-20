@@ -2,6 +2,8 @@ import { useEffect } from 'react'
 import { useInvoiceStore } from '../store/useInvoiceStore'
 import Logo from '../assets/logo.svg'
 
+import Avatar from '../assets/ffv.png'
+
 const Sidebar = () => {
   const { theme, toggleTheme } = useInvoiceStore()
   const isDarkMode = theme === 'dark'
@@ -49,12 +51,13 @@ const Sidebar = () => {
         <div className="w-[1px] h-full lg:w-full lg:h-[1px] bg-[#494E6E]"></div>
 
 
-        {/* Profile Image (Dummy) */}
+        {/* Profile Image */}
         <div className="p-6">
-          <img src="https://i.pravatar.cc/40?u=invoiceapp" alt="Avatar" className="w-[40px] h-[40px] rounded-full border-2 border-transparent hover:border-[#7C5DFA] transition-all duration-300 cursor-pointer" />
+          <img src={Avatar} alt="Avatar" className="w-[40px] h-[40px] rounded-full border-2 border-transparent hover:border-[#7C5DFA] transition-all duration-300 cursor-pointer" />
         </div>
       </div>
     </aside>
+
   )
 }
 
