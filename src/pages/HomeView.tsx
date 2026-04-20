@@ -3,10 +3,10 @@ import { useInvoiceStore } from '../store/useInvoiceStore'
 import InvoiceCard from '../components/InvoiceCard'
 import Button from '../components/Button'
 import NoInvoiceIcon from '../assets/no_invoice.svg'
-
+import NoInvoiceDarkIcon from '../assets/no_invoice_dark.svg'
 
 const HomeView = () => {
-  const { invoices, openForm } = useInvoiceStore()
+  const { invoices, openForm, theme } = useInvoiceStore()
   const [isFilterOpen, setIsFilterOpen] = useState(false)
   const [activeFilters, setActiveFilters] = useState<string[]>(['draft', 'pending', 'paid'])
   const filterRef = useRef<HTMLDivElement>(null)
@@ -63,9 +63,9 @@ const HomeView = () => {
               onClick={() => setIsFilterOpen(!isFilterOpen)}
               aria-haspopup="listbox"
               aria-expanded={isFilterOpen}
-              className="flex items-center gap-3 md:gap-4 font-bold hover:text-[#888EB0] transition-colors focus:outline-none focus:ring-2 focus:ring-[#7C5DFA] rounded-md px-2 py-1"
+              className="flex items-center gap-2 md:gap-3 font-bold hover:text-[#888EB0] transition-colors focus:outline-none focus:ring-2 focus:ring-[#7C5DFA] rounded-md px-2 py-1"
             >
-              Filter <span className="hidden md:inline">by status</span>
+              <span>Filter<span className="hidden md:inline"> by status</span></span>
               <svg 
                 className={`transition-transform duration-300 ${isFilterOpen ? 'rotate-180' : ''}`} 
                 width="11" height="7" xmlns="http://www.w3.org/2000/svg"
@@ -106,7 +106,7 @@ const HomeView = () => {
             <div className="w-8 h-8 bg-white rounded-full flex items-center justify-center shrink-0">
               <svg width="11" height="11" xmlns="http://www.w3.org/2000/svg"><path d="M6.313 10.031V6.313h3.718V4.687H6.313V.969H4.687v3.718H.969v1.626h3.718v3.718z" fill="#7C5DFA" fillRule="nonzero"/></svg>
             </div>
-            New <span className="hidden md:inline">Invoice</span>
+            <span className="font-bold">New<span className="hidden md:inline"> Invoice</span></span>
           </Button>
         </div>
 
@@ -121,12 +121,9 @@ const HomeView = () => {
         </div>
       ) : (
         <div className="mt-20 flex flex-col items-center text-center animate-in fade-in zoom-in duration-700">
-          <img src={NoInvoiceIcon} alt="No invoices here" className="mb-10 w-[242px] object-contain" />
-          <h2 className="text-2xl font-bold mb-4 dark:text-white transition-colors">There is nothing here</h2>
-          <p className="text-[#888EB0] dark:text-[#DFE3FA] max-w-[220px] transition-colors">
-            Create an invoice by clicking the <span className="font-bold">New Invoice</span> button and get started
-          </p>
+          <img src={theme === 'dark' ? NoInvoiceDarkIcon : NoInvoiceIcon} alt="No invoices here" className="mb-10 w-[242px] object-contain" />
         </div>
+
       )}
     </div>
   )
