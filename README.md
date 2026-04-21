@@ -55,7 +55,7 @@ Application state is managed globally via **Zustand**. To ensure user data is no
 ## ⚖️ Trade-offs
 
 -   **Local Persistence vs. Backend**: For the scope of this project, `localStorage` was chosen over a full backend (PostgreSQL/Node.js). This ensures zero-config setup for reviewers but limits data sharing across different browsers/devices.
--   **Native Form Elements**: We opted for native browser inputs (like `date`) for better mobile accessibility, though a custom date picker would offer more styling control.
+-   **Native Form Elements**: I opted for native browser inputs (like `date`) for better mobile accessibility, though a custom date picker would offer more styling control.
 
 ---
 
