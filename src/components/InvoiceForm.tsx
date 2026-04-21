@@ -27,6 +27,7 @@ const InvoiceForm = () => {
     reset,
     watch,
     setValue,
+    setError,
     formState: { errors },
   } = useForm({
     defaultValues: {
@@ -116,6 +117,11 @@ const InvoiceForm = () => {
   if (!isFormOpen) return null
 
   const onSubmit = (data: any, status: 'pending' | 'draft') => {
+    if (!data.items || data.items.length === 0) {
+      setError('items', { type: 'manual', message: 'An item must be added' })
+      return
+    }
+
     const total = data.items.reduce((acc: number, item: any) => acc + (Number(item.total) || 0), 0)
     const invoiceData = {
       ...data,

@@ -38,6 +38,13 @@ export const useInvoiceStore = create<InvoiceState>()(
           ),
         })),
         
+      markAsPending: (id: string) =>
+        set((state) => ({
+          invoices: state.invoices.map((inv) =>
+            inv.id === id ? { ...inv, status: 'pending' } : inv
+          ),
+        })),
+        
       toggleTheme: () =>
         set((state) => ({ theme: state.theme === 'light' ? 'dark' : 'light' })),
     }),

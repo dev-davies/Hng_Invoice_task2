@@ -40,6 +40,7 @@ export interface InvoiceState {
   updateInvoice: (id: string, updatedInvoice: Partial<Invoice>) => void
   deleteInvoice: (id: string) => void
   markAsPaid: (id: string) => void
+  markAsPending: (id: string) => void
   toggleTheme: () => void
 }
 

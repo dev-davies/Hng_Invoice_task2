@@ -47,17 +47,16 @@ const HomeView = () => {
 
   return (
     <div className="max-w-3xl mx-auto pb-20 px-6 lg:px-0 animate-in fade-in slide-in-from-bottom-4 duration-500">
-      <header className="flex justify-between items-center w-full mb-8">
+      <header className="flex justify-between items-center w-full mb-8 md:mb-14 transition-all">
         <div className="flex flex-col">
           <h1 className="text-2xl md:text-3xl lg:text-4xl font-bold mb-1 dark:text-white transition-colors">Invoices</h1>
           <p className="text-[#888EB0] dark:text-[#DFE3FA] text-xs md:text-sm transition-colors">
-            <span className="hidden md:inline">There are </span>
-            {filteredInvoices.length} 
-            <span className="hidden md:inline"> total</span> invoices
+            {filteredInvoices.length} invoices
           </p>
         </div>
 
-        <div className="flex items-center gap-[18px] md:gap-10">
+        <div className="flex items-center gap-2 md:gap-10">
+
           <div className="relative" ref={filterRef}>
             <button 
               onClick={() => setIsFilterOpen(!isFilterOpen)}
